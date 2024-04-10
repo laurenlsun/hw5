@@ -25,12 +25,12 @@ bool schedHelp(const AvailabilityMatrix& avail,
     const size_t dailyNeed,
     const size_t maxShifts,
     DailySchedule& sched,
+    vector<int>& numShifts,
     int r,
     int c);
 
 bool schedOK(const vector<int>& numShifts,
-    const size_t maxShifts,
-    DailySchedule& sched);
+    const size_t maxShifts);
 
 // Add your implementation of schedule() and other helper functions here
 
@@ -67,7 +67,7 @@ bool schedHelp(const AvailabilityMatrix& avail,
     if (r==sched.size()) // we skipped past the last row; everything worked
         return true;
     if (c==sched[0].size()) // skipped past the last col; need new row
-        return schedHelp(avail, dailyNeed, maxShifts, sched, r+1, 0);
+        return schedHelp(avail, dailyNeed, maxShifts, sched, numShifts, r+1, 0);
 
     // iterate through possibilities
     for (int i=0; i<avail[0].size(); i++) {
@@ -77,7 +77,7 @@ bool schedHelp(const AvailabilityMatrix& avail,
         // check if that worked
         if (schedOK(numShifts, maxShifts)) {
             // that did work
-            if (schedHelp(avail, dailyNeed, maxShifts, sched, r, c+1))
+            if (schedHelp(avail, dailyNeed, maxShifts, sched, numShifts, r, c+1))
                 // and everything else down the line worked
                 return true;
         }

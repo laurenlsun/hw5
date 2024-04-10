@@ -14,7 +14,10 @@ using namespace std;
 
 
 // Add prototypes of helper functions here
-
+void wordleHelper(std::set<std::string>& words, 
+    std::string& input,
+    const std::string& floating,
+    const std::set<std::string>& dict);
 
 // Definition of primary wordle function
 std::set<std::string> wordle(
@@ -26,8 +29,8 @@ std::set<std::string> wordle(
     
     // make new set
     std::set<std::string> words;
-    
-    wordleHelper(words, in, floating, dict);
+    std::string input = in; // make editable copy that's not const
+    wordleHelper(words, input, floating, dict);
 
     return words;
 }
@@ -36,7 +39,7 @@ std::set<std::string> wordle(
 
 void wordleHelper(
     std::set<std::string>& words, // set to which to insert
-    const std::string& in, // current state of guessed word
+    std::string& in, // current state of guessed word
     const std::string& floating, // letters needed
     const std::set<std::string>& dict
 )
@@ -71,5 +74,5 @@ void wordleHelper(
     }
 
     // tried all letters and added all the combos that worked, so reset to -
-    in[curr] = "-";
+    in[curr] = '-';
 }

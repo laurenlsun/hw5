@@ -28,8 +28,7 @@ bool schedHelp(const AvailabilityMatrix& avail,
     int r,
     int c);
 
-bool schedOK(const AvailabilityMatrix& avail,
-    const size_t dailyNeed,
+bool schedOK(const vector<int>& numShifts,
     const size_t maxShifts,
     DailySchedule& sched);
 
@@ -75,7 +74,6 @@ bool schedHelp(const AvailabilityMatrix& avail,
         sched[r][c] = i; // try a worker
         // increment their number of shifts worked
         numShifts[i]++;
-
         // check if that worked
         if (schedOK(numShifts, maxShifts)) {
             // that did work
@@ -93,7 +91,7 @@ bool schedHelp(const AvailabilityMatrix& avail,
 
 }
 
-bool schedOK(vector<int> numShifts, const size_t maxShifts) {
+bool schedOK(const vector<int>& numShifts, const size_t maxShifts) {
     for (int i=0; i<numShifts.size(); i++) {
         if (numShifts[i] > maxShifts)
             return false;
